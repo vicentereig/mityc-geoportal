@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Mityc::Geoportal::VERSION
   s.authors     = ["Vicente Reig Rincón de Arellano"]
   s.email       = ["vicente.reig@gmail.com"]
-  s.homepage    = ""
+  s.homepage    = "http://github.com/vicentereig/mityc-geoportal"
   s.summary     = %q{Provides access to the fuel prices published by the Spanish Government.}
   s.description = %q{Simple wrapper to the fuel prices published by the Spanish Government through http://geoportal.mityc.es/}
 
