@@ -1,4 +1,4 @@
-class Mytic::Geoportal::Measure
+class Mityc::Geoportal::Measure
   include HappyMapper, HTTParty
 
   base_uri Mityc::Geoportal::base_uri
@@ -20,7 +20,7 @@ class Mytic::Geoportal::Measure
 
   def self.by_fuel(fuel_id)
     self.fuel_id = fuel_id
-    self.parse(measures_html)
+    @measures ||= self.parse(measures_html)
   end
 
   def amount

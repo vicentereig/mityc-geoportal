@@ -5,13 +5,13 @@ class Mityc::Geoportal::City
 
   tag 'm'
 
-  text_node :name, String
+  content :name, String
 
   attr_accessor :province_id
 
   def self.by_province(province_id)
     self.province_id = province_id
-    self.parse(cities_xml)
+    @cities ||= self.parse(cities_xml)
   end
 
   protected

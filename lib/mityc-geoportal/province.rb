@@ -8,11 +8,11 @@ class Mityc::Geoportal::Province
   element :name, String, tag: 'nombre_provincia'
 
   def cities
-    @cities ||= City.by_province(self.id)
+    @cities ||= Mityc::Geoportal::City.by_province(self.id)
   end
 
   def self.all
-    self.parse(provinces_xml)
+    @provinces ||= self.parse(provinces_xml)
   end
 
   protected

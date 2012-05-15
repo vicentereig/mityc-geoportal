@@ -5,11 +5,16 @@ class Mityc::Geoportal::Fuel
 
   tag "tipocombustible"
 
-  element :key, Integer, tag: "id"
+  element :id, Integer, tag: "id"
   element :name, String, tag: "nombre"
 
   def self.all
-    self.parse(fuels_xml)
+    @fuels ||= self.parse(fuels_xml)
+  end
+
+  # TODO: Properly implement an Identiy Map
+  def measures
+    @measures ||= Mityc::Geoportal::Measure.by_fuel(self.id)
   end
 
   protected
