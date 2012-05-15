@@ -5,11 +5,11 @@ require "mityc-geoportal/version"
 Gem::Specification.new do |s|
   s.name        = "mityc-geoportal"
   s.version     = Mityc::Geoportal::VERSION
-  s.authors     = ["Vicente Reig"]
+  s.authors     = ["Vicente Reig Rincón de Arellano"]
   s.email       = ["vicente.reig@gmail.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{Provides access to the fuel prices published by the Spanish Government.}
+  s.description = %q{Simple wrapper to the fuel prices published by the Spanish Government through http://geoportal.mityc.es/}
 
   s.rubyforge_project = "mityc-geoportal"
 
@@ -20,5 +20,6 @@ Gem::Specification.new do |s|
 
   # specify any dependencies here; for example:
   # s.add_development_dependency "rspec"
-  # s.add_runtime_dependency "rest-client"
+  s.add_runtime_dependency "unhappymapper"
+  s.add_runtime_dependency "httparty"
 end
