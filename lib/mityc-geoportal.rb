@@ -1,7 +1,5 @@
 require "mityc-geoportal/version"
-
-module Mityc
-  module Geoportal
-    # Your code goes here...
-  end
-end
+require "mityc-geoportal/fuel"
+require "mityc-geoportal/city"
+require "mityc-geoportal/province"
+require "mityc-geoportal/measure"
