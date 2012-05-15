@@ -11,13 +11,14 @@ class Mityc::Geoportal::Province
     @cities ||= Mityc::Geoportal::City.by_province(self.id)
   end
 
-  def self.all
-    @provinces ||= self.parse(provinces_xml)
-  end
+  class << self
+    def all
+      @provinces ||= self.parse(provinces_xml)
+    end
 
-  protected
-  def self.provinces_xml
-    self.get('/provincias.do').body
+    protected
+      def provinces_xml
+        self.get('/provincias.do').body
+      end
   end
-
 end

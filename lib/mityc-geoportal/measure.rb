@@ -16,13 +16,6 @@ class Mityc::Geoportal::Measure
   element :measured_at,   String, xpath: 'td[5]'
   element :amount,        String, xpath: 'td[6]'
 
-  attr_accessor :fuel_id
-
-  def self.by_fuel(fuel_id)
-    self.fuel_id = fuel_id
-    @measures ||= self.parse(measures_html)
-  end
-
   def amount
     @amount.gsub(/,/, ".").to_f
   end
@@ -67,12 +60,20 @@ class Mityc::Geoportal::Measure
     end
   end
 
-  protected
-    def self.measures_html
-      self.get('/searchTotal.do', query: query_params).body
-    end
+  class << self
+    attr_accessor :fuel_id
 
-    def self.query_params
-      { tipoCons: 1, tipoBusqueda: 0, tipoCarburante: self.fuel_key }
+    def by_fuel(fuel_id)
+      self.fuel_id = fuel_id
+      @measures ||= self.parse(measures_html)
     end
+    protected
+      def measures_html
+        self.get('/searchTotal.do', query: query_params).body
+      end
+
+      def query_params
+        { tipoCons: 1, tipoBusqueda: 0, tipoCarburante: self.fuel_id }
+      end
+  end
 end
