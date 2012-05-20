@@ -71,7 +71,7 @@ class Mityc::Geoportal::Measure
     protected
       def measures_html
         response_body = self.get('/searchTotal.do', query: query_params).body
-        Iconv.iconv('UTF-8', 'ISO-8859-15', response_body).first
+        response_body.encode('UTF-8', 'ISO-8859-15')
       end
 
       def query_params
