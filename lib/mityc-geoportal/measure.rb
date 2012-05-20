@@ -79,6 +79,7 @@ class Mityc::Geoportal::Measure
 
   protected
     def transform_measured_at
+      return @measured_at if @measured_at.is_a? Date
       @measured_at.split(/\//).map(&:to_i).reverse
     end
 end
