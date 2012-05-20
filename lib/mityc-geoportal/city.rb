@@ -16,7 +16,7 @@ class Mityc::Geoportal::City
 
     def by_province(province_id)
       self.province_id = province_id
-      @cities ||= self.parse(cities_xml)
+      @cities = self.parse(cities_xml)
     end
 
     protected
