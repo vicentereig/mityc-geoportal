@@ -1,6 +1,6 @@
 # mityc-geoportal
 
-Provides access to the fuel prices published by the Spanish Government
+Provides access to the fuel prices published by the Spanish Government.
 
 # Usage
 

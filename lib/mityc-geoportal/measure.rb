@@ -1,3 +1,5 @@
+require 'iconv'
+
 class Mityc::Geoportal::Measure
   include HappyMapper, HTTParty
 
@@ -21,8 +23,7 @@ class Mityc::Geoportal::Measure
   end
 
   def measured_at
-    @measured_at = @measured_at.split(/\//).map(&:to_i).reverse
-    @measured_at = Date.new(*@measured_at)
+    @measured_at = Date.new(*transform_measured_at)
   end
 
   def public_sale
@@ -51,7 +52,7 @@ class Mityc::Geoportal::Measure
 
   def margin
     @margin = @margin.strip
-    if @margin =~ /^$i/i
+    if @margin =~ /^i$/i
       "left"
     elsif @margin =~/^d$/i
       "right"
@@ -69,11 +70,17 @@ class Mityc::Geoportal::Measure
     end
     protected
       def measures_html
-        self.get('/searchTotal.do', query: query_params).body
+        response_body = self.get('/searchTotal.do', query: query_params).body
+        Iconv.iconv('UTF-8', 'ISO-8859-15', response_body).first
       end
 
       def query_params
         { tipoCons: 1, tipoBusqueda: 0, tipoCarburante: self.fuel_id }
       end
   end
+
+  protected
+    def transform_measured_at
+      @measured_at.split(/\//).map(&:to_i).reverse
+    end
 end
