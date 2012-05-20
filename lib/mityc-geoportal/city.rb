@@ -7,6 +7,10 @@ class Mityc::Geoportal::City
 
   content :name, String
 
+  def name
+    @name.strip
+  end
+
   class << self
     attr_accessor :province_id
 

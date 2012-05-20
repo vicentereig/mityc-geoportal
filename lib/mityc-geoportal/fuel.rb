@@ -17,6 +17,10 @@ class Mityc::Geoportal::Fuel
       @fuels ||= self.parse(fuels_xml)
     end
 
+    def by_id(fuel_id)
+      self.all.find { |fuel| fuel.id = fuel_id}
+    end
+
     protected
       def fuels_xml
         self.get('/combustibles.do', query: query_params).body

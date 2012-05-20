@@ -11,6 +11,10 @@ class Mityc::Geoportal::Province
     @cities ||= Mityc::Geoportal::City.by_province(self.id)
   end
 
+  def name
+    @name.strip
+  end
+
   class << self
     def all
       @provinces ||= self.parse(provinces_xml)
