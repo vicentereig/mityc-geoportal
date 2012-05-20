@@ -1,5 +1,3 @@
-require 'iconv'
-
 class Mityc::Geoportal::Measure
   include HappyMapper, HTTParty
 
