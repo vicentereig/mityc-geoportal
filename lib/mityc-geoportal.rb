@@ -8,7 +8,7 @@ end
 
 require "happymapper"
 require "httparty"
-
+require "mityc-geoportal/ext/array"
 require "mityc-geoportal/version"
 require "mityc-geoportal/fuel"
 require "mityc-geoportal/city"

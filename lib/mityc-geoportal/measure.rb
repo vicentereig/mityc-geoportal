@@ -66,6 +66,7 @@ class Mityc::Geoportal::Measure
       self.fuel_id = fuel_id
       @measures ||= self.parse(measures_html)
     end
+
     protected
       def measures_html
         response_body = self.get('/searchTotal.do', query: query_params).body
