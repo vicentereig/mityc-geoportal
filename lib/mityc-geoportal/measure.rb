@@ -21,7 +21,7 @@ class Mityc::Geoportal::Measure
   end
 
   def measured_at
-    @measured_at = Date.new(*transform_measured_at)
+    @measured_at = self.transform_measured_at
   end
 
   def public_sale
@@ -81,6 +81,7 @@ class Mityc::Geoportal::Measure
   protected
     def transform_measured_at
       return @measured_at if @measured_at.is_a? Date
-      @measured_at.split(/\//).map(&:to_i).reverse
+      date_components = @measured_at.split(/\//).map(&:to_i).reverse
+      Date.new(*date_components)
     end
 end
