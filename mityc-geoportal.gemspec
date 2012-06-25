@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Vicente Reig Rincón de Arellano"]
   s.email       = ["vicente.reig@gmail.com"]
   s.homepage    = "http://github.com/vicentereig/mityc-geoportal"
-  s.summary     = %q{Provides access to the fuel prices published by the Spanish Government.}
-  s.description = %q{Simple wrapper to the fuel prices published by the Spanish Government through http://geoportal.mityc.es/}
+  s.summary     = %q{Powers http://ahorraralrepostar.com/ fuel price update process from http://geoportal.mityc.es/}
+  s.description = %q{Simple wrapper to the fuel prices published by the Spanish Government through http://geoportal.mityc.es/ which powers http://ahorraralrepostar.com}
 
   s.rubyforge_project = "mityc-geoportal"
 
@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   # specify any dependencies here; for example:
-  # s.add_development_dependency "rspec"
+  s.add_development_dependency "rspec"
   s.add_runtime_dependency "unhappymapper"
-  s.add_runtime_dependency "httparty"
+  s.add_runtime_dependency "typhoeus"
 end
