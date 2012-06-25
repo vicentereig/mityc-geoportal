@@ -59,7 +59,7 @@ protected
   def query_params(offset=0)
     { nomProvincia: '',  nomMunicipio: '', tipoCarburante: self.fuel.id, codPostal: '',
       rotulo: '',        tipoVenta: false, nombreVia: '',   numVia: '',
-      economicas: false, tipoBusqueda: 0,  ordenacion: 'P', position: offset
+      economicas: false, tipoBusqueda: 0,  ordenacion: 'P', posicion: offset
     }
   end
 end
