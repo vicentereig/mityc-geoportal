@@ -1,10 +1,12 @@
 class Mityc::Geoportal::Fuel
-  include HappyMapper
+  include HappyMapper, ActiveModel::Validations
 
-  tag "tipocombustible"
-
+  tag     "tipocombustible"
   element :id,   String, tag: "id"
   element :name, String, tag: "nombre"
+
+  validate :id,   presence: true
+  validate :name, presence: true
 
   def measures
     @measures ||= Mityc::Geoportal::Measure.by_fuel(self.id)
@@ -25,13 +27,17 @@ class Mityc::Geoportal::Fuel
       self.all.find { |fuel| fuel.id = fuel_id}
     end
 
-    protected
-      def fuels_xml
-        self.get('/combustibles.do', query: query_params).body
-      end
+  protected
+    def fuels_xml
+      response.body
+    end
 
-      def query_params
-        { tipoBusqueda: 0 }
-      end
+    def response
+      @response ||= Typhoeus::Request.get('http://geoportal.mityc.es/hidrocarburos/eess/combustibles.do', params: query_params)
+    end
+
+    def query_params
+      { tipoBusqueda: 0 }
+    end
   end
 end

@@ -1,0 +1,34 @@
+<tiposcombustible>
+  <tipocombustible>
+    <id>1</id>
+    <nombre>Gasolina 95</nombre>
+  </tipocombustible>
+  <tipocombustible>
+    <id>2</id>
+    <nombre>Gasolina 97</nombre>
+  </tipocombustible>
+  <tipocombustible>
+    <id>3</id>
+    <nombre>Gasolina 98</nombre>
+  </tipocombustible>
+  <tipocombustible>
+    <id>4</id>
+    <nombre>Gasóleo A habitual</nombre>
+  </tipocombustible>
+  <tipocombustible>
+    <id>5</id>
+    <nombre>Nuevo gasóleo A</nombre>
+  </tipocombustible>
+  <tipocombustible>
+    <id>6</id>
+    <nombre>Gasóleo B</nombre>
+  </tipocombustible>
+  <tipocombustible>
+    <id>7</id>
+    <nombre>Gasóleo C</nombre>
+  </tipocombustible>
+  <tipocombustible>
+    <id>8</id>
+    <nombre>Biodiésel</nombre>
+  </tipocombustible>
+</tiposcombustible>
