@@ -11,6 +11,10 @@ class Mityc::Geoportal::City
     @name.strip
   end
 
+  def measures
+    Measure.by_city(self.name)
+  end
+
   class << self
     attr_accessor :province_id
 

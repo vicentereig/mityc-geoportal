@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Mityc::Geoportal::City do
+describe Mityc::Geoportal::Province do
   it 'should map 52 provinces from spec/data/provincias.xml' do
     provinces = Mityc::Geoportal::Province.parse(File.read('spec/data/provincias.xml'))
     provinces.size.should == 52

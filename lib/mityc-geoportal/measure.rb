@@ -1,7 +1,7 @@
 class Mityc::Geoportal::Measure
   include HappyMapper
 
-  tag 'tr[position()>4]'
+  tag "tr[position()>1 and @class != 'tdPaginator']"
 
   element :province_name, String, xpath: 'td[1]'
   element :city_name,     String, xpath: 'td[2]'
