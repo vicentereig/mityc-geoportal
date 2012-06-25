@@ -3,7 +3,7 @@ class Mityc::Geoportal::Fuel
 
   tag "tipocombustible"
 
-  element :id, Integer,  tag: "id"
+  element :id,   String, tag: "id"
   element :name, String, tag: "nombre"
 
   def measures

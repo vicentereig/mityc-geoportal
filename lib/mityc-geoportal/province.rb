@@ -1,9 +1,12 @@
 class Mityc::Geoportal::Province
-  include HappyMapper
+  include HappyMapper, ActiveModel::Validations
 
-  tag 'provincia'
+  tag     'provincia'
   element :id,   String, tag: 'id_provincia'
   element :name, String, tag: 'nombre_provincia'
+
+  validate :id,   presence: true
+  validate :name, presence: true
 
   def cities
     @cities ||= Mityc::Geoportal::City.by_province(self.id)
@@ -18,9 +21,13 @@ class Mityc::Geoportal::Province
       @provinces ||= self.parse(provinces_xml)
     end
 
-    protected
-      def provinces_xml
-        self.get('/provincias.do').body
-      end
+  protected
+    def provinces_xml
+      response.body
+    end
+
+    def response
+      @response ||= Typhoeus::Request.get('http://geoportal.mityc.es/hidrocarburos/eess/provincias.do')
+    end
   end
 end
