@@ -1,5 +1,5 @@
 class Mityc::Geoportal::Measure
-  include HappyMapper, HTTParty
+  include HappyMapper
 
   base_uri Mityc::Geoportal::base_uri
 
