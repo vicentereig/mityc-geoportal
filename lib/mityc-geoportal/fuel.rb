@@ -1,8 +1,6 @@
 class Mityc::Geoportal::Fuel
   include HappyMapper
 
-  base_uri Mityc::Geoportal::base_uri
-
   tag "tipocombustible"
 
   element :id, Integer,  tag: "id"

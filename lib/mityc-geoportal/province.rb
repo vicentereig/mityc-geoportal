@@ -1,8 +1,6 @@
 class Mityc::Geoportal::Province
   include HappyMapper
 
-  base_uri Mityc::Geoportal::base_uri
-
   tag 'provincia'
   element :id,   String, tag: 'id_provincia'
   element :name, String, tag: 'nombre_provincia'

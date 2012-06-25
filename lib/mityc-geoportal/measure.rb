@@ -1,8 +1,6 @@
 class Mityc::Geoportal::Measure
   include HappyMapper
 
-  base_uri Mityc::Geoportal::base_uri
-
   tag 'tr[position()>4]'
 
   element :province_name, String, xpath: 'td[1]'

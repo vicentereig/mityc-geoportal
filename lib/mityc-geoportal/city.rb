@@ -1,11 +1,11 @@
 class Mityc::Geoportal::City
-  include HappyMapper
-
-  base_uri Mityc::Geoportal::base_uri
+  include HappyMapper, ActiveModel::Validations
 
   tag 'm'
 
   content :name, String
+
+  validate :name, presence: true
 
   def name
     @name.strip
@@ -16,16 +16,20 @@ class Mityc::Geoportal::City
 
     def by_province(province_id)
       self.province_id = province_id
-      @cities = self.parse(cities_xml)
+      @cities = self.parse(cities_xml).select(&:valid?)
     end
 
-    protected
-      def cities_xml
-        self.get('/municipios.do', query: query_params).body
-      end
+  protected
+    def cities_xml
+      response.body
+    end
 
-      def query_params
-        { tipoBusqueda: 0, idProvincia: self.province_id }
-      end
+    def query_params
+      { tipoBusqueda: 0, idProvincia: self.province_id }
+    end
+
+    def response
+      @response ||= Typhoeus::Request.get('http://geoportal.mityc.es/hidrocarburos/eess/municipios.do', params: query_params)
+    end
   end
 end
