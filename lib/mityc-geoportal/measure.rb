@@ -14,6 +14,9 @@ class Mityc::Geoportal::Measure
   element :schedule,      String, xpath: 'td[10]'
   element :measured_at,   String, xpath: 'td[5]'
   element :amount,        String, xpath: 'td[6]'
+  element :lat_lng_info,  LatLngInfo, xpath: 'td[11]'
+
+  delegate :lat, :lng, to: 'lat_lng_info'
 
   def amount
     @amount.gsub(/,/, ".").to_f
