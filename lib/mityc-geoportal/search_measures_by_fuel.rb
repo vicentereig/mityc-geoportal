@@ -13,7 +13,7 @@ class Mityc::Geoportal::SearchMeasuresByFuel
   end
 
   def measures
-    hydra    = Typhoeus::Hydra.new(max_concurrency: 20)
+    hydra    = Typhoeus::Hydra.new(max_concurrency: 5)
     fire_starter = self.request
     fire_starter.on_complete { |response|
       self.search_results = Mityc::Geoportal::SearchResults.parse(response.body)
