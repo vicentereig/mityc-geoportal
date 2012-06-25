@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Mityc::Geoportal
   class SearchResults
     include HappyMapper

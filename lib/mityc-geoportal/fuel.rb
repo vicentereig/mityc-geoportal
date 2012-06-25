@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Mityc::Geoportal::Fuel
   include HappyMapper, ActiveModel::Validations
 

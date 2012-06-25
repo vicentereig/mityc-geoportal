@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require "happymapper"
 require "typhoeus"
 require "active_model"

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Array
   def by_attribute(attr_name)
     group_by_attribute(attr_name)
