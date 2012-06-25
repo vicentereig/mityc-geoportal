@@ -13,8 +13,7 @@ describe Mityc::Geoportal::Fuel do
   end
 
   it 'should download all measures for first fuel' do
-    fuels = Mityc::Geoportal::Fuel.all
-    fuel  = fuels.first
+    fuel = Mityc::Geoportal::Fuel.all.first
     measures = fuel.measures
 
     measures.size.should == measures.search_results.count

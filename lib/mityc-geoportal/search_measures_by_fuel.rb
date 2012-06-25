@@ -13,6 +13,7 @@ class Mityc::Geoportal::SearchMeasuresByFuel
   end
 
   def measures
+    return @measures if @measures
     hydra    = Typhoeus::Hydra.new(max_concurrency: 5)
     fire_starter = self.request
     fire_starter.on_complete { |response|
@@ -31,14 +32,14 @@ class Mityc::Geoportal::SearchMeasuresByFuel
     hydra.queue fire_starter
     hydra.run
 
-    self.requests.map(&:handled_response).flatten
+    @measures = self.requests.map(&:handled_response).flatten
 
   end
 
 protected
   def request(offset=0)
     self.requests ||= []
-    req = Typhoeus::Request.new(SEARCH_ENDPOINT_URL, params: query_params(offset), verbose: true)
+    req = Typhoeus::Request.new(SEARCH_ENDPOINT_URL, params: query_params(offset))
     self.requests << req
     req
   end
