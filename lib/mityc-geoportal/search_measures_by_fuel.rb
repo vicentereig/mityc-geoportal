@@ -1,37 +1,22 @@
-#
-# http://geoportal.mityc.es/hidrocarburos/eess/searchAddress.do?
-#   nomProvincia=01&
-#   nomMunicipio=ALTUBE&
-#   tipoCarburante=1&
-#   rotulo=&
-#   tipoVenta=false&
-#   nombreVia=&
-#   numVia=&
-#   codPostal=&
-#   economicas=false&
-#   tipoBusqueda=0&
-#   ordenacion=P&
-#   posicion=0
-#
+require 'active_support/core_ext/module/delegation'
+
 class Mityc::Geoportal::SearchMeasuresByFuel
+
   SEARCH_ENDPOINT_URL = 'http://geoportal.mityc.es/hidrocarburos/eess/searchAddress.do'
 
   attr_accessor :search_results, :fuel, :requests
+
+  delegate :each, :size, to: 'measures'
 
   def initialize(fuel)
     @fuel = fuel
   end
 
   def measures
-    self.retrieve_measures
-  end
-
-protected
-  def retrieve_measures
     hydra    = Typhoeus::Hydra.new(max_concurrency: 20)
     fire_starter = self.request
     fire_starter.on_complete { |response|
-      self.search_results = Mityc::Geoportal::SearchResults.parse(response.body).first
+      self.search_results = Mityc::Geoportal::SearchResults.parse(response.body)
 
       self.search_results.offsets.each { |offset|
         req = request(offset)

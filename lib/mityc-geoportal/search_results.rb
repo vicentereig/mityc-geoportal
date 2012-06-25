@@ -1,18 +1,19 @@
 # -*- encoding : utf-8 -*-
+
 module Mityc::Geoportal
   class SearchResults
     include HappyMapper
+    tag "div"
 
-    tag "td[@class='tdPaginator']"
+    element  :smart_and_helpful_sentence, String, tag: "p"
 
-    has_many :pages, String, tag: "div[@class='paginatorSquareNa']"
+
+    def count
+      /\d+/.match(self.smart_and_helpful_sentence).to_s.to_i
+    end
 
     def offsets
-      self.pages.map.with_index { |_, page|
-        offset = ((page+1)*10)
-        yield offset if block_given?
-        offset
-      }
+      10.step(self.count, 10)
     end
   end
 end

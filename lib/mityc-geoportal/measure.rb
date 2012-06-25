@@ -20,7 +20,7 @@ class Mityc::Geoportal::Measure
 
   def self.by_fuel(fuel)
     search = Mityc::Geoportal::SearchMeasuresByFuel.new(fuel)
-    search.measures
+    search
   end
 
   def amount
