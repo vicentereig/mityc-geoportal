@@ -16,7 +16,8 @@ describe Mityc::Geoportal::Fuel do
     fuels = Mityc::Geoportal::Fuel.all
     fuel  = fuels.first
     measures = fuel.measures
-    measures.size.should > 0
+
+    measures.size.should == measures.search_results.count
     measures.each.with_index { |measure|
       measure.should be_a Mityc::Geoportal::Measure
     }

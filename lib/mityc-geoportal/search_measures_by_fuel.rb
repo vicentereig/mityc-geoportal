@@ -35,9 +35,10 @@ class Mityc::Geoportal::SearchMeasuresByFuel
 
   end
 
+protected
   def request(offset=0)
     self.requests ||= []
-    req = Typhoeus::Request.new(SEARCH_ENDPOINT_URL, params: query_params(offset))
+    req = Typhoeus::Request.new(SEARCH_ENDPOINT_URL, params: query_params(offset), verbose: true)
     self.requests << req
     req
   end
