@@ -13,6 +13,6 @@ describe Mityc::Geoportal::Measure do
 
   it 'should extract geo coordinates from deeply fucked inline javascript call' do
     measure = @measures.first
-    measure.lat.should == ''
+    [measure.lat, measure.lng] == [-13.564528,28.971667].map(&:to_s)
   end
 end
