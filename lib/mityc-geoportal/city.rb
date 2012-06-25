@@ -13,7 +13,7 @@ class Mityc::Geoportal::City
   end
 
   def measures
-    Measure.by_city(self.name)
+    Measure.by_city(self)
   end
 
   class << self

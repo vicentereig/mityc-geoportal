@@ -11,4 +11,14 @@ describe Mityc::Geoportal::Fuel do
     fuels = Mityc::Geoportal::Fuel.all
     fuels.size.should == 8
   end
+
+  it 'should download all measures for first fuel' do
+    fuels = Mityc::Geoportal::Fuel.all
+    fuel  = fuels.first
+    measures = fuel.measures
+    measures.size.should > 0
+    measures.each.with_index { |measure|
+      measure.should be_a Mityc::Geoportal::Measure
+    }
+  end
 end

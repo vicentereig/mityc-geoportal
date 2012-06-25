@@ -10,7 +10,7 @@ class Mityc::Geoportal::Fuel
   validate :name, presence: true
 
   def measures
-    @measures ||= Mityc::Geoportal::Measure.by_fuel(self.id)
+    @measures ||= Mityc::Geoportal::Measure.by_fuel(self)
   end
 
   def measures_by(field_name)
@@ -21,7 +21,7 @@ class Mityc::Geoportal::Fuel
 
   class << self
     def all
-      @fuels ||= self.parse(fuels_xml)
+      self.parse(fuels_xml)
     end
 
     def by_id(fuel_id)

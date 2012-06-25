@@ -2,7 +2,7 @@
 class Mityc::Geoportal::Measure
   include HappyMapper
 
-  tag "tr[position()>1 and @class != 'tdPaginator']"
+  tag "tr[position()>1 and @class!='tdPaginator']"
 
   element :province_name, String, xpath: 'td[1]'
   element :city_name,     String, xpath: 'td[2]'
@@ -17,6 +17,11 @@ class Mityc::Geoportal::Measure
   element :lat_lng_info,  Mityc::Geoportal::LatLngInfo, xpath: 'td[11]'
 
   delegate :lat, :lng, to: 'lat_lng_info'
+
+  def self.by_fuel(fuel)
+    search = Mityc::Geoportal::SearchMeasuresByFuel.new(fuel)
+    search.measures
+  end
 
   def amount
     @amount.gsub(/,/, ".").to_f
@@ -61,29 +66,10 @@ class Mityc::Geoportal::Measure
     end
   end
 
-  class << self
-    attr_accessor :fuel_id
-
-    def by_fuel(fuel_id)
-      self.fuel_id = fuel_id
-      @measures ||= self.parse(measures_html)
-    end
-
-    protected
-      def measures_html
-        response_body = self.get('/searchTotal.do', query: query_params).body
-        response_body.encode('UTF-8', 'ISO-8859-15')
-      end
-
-      def query_params
-        { tipoCons: 1, tipoBusqueda: 0, tipoCarburante: self.fuel_id }
-      end
+protected
+  def transform_measured_at
+    return @measured_at if @measured_at.is_a? Date
+    date_components = @measured_at.split(/\//).map(&:to_i).reverse
+    Date.new(*date_components)
   end
-
-  protected
-    def transform_measured_at
-      return @measured_at if @measured_at.is_a? Date
-      date_components = @measured_at.split(/\//).map(&:to_i).reverse
-      Date.new(*date_components)
-    end
 end

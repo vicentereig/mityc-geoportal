@@ -1,10 +1,24 @@
+#
+# http://geoportal.mityc.es/hidrocarburos/eess/searchAddress.do?
+#   nomProvincia=01&
+#   nomMunicipio=ALTUBE&
+#   tipoCarburante=1&
+#   rotulo=&
+#   tipoVenta=false&
+#   nombreVia=&
+#   numVia=&
+#   codPostal=&
+#   economicas=false&
+#   tipoBusqueda=0&
+#   ordenacion=P&
+#   posicion=0
+#
 class Mityc::Geoportal::SearchMeasuresByFuel
   SEARCH_ENDPOINT_URL = 'http://geoportal.mityc.es/hidrocarburos/eess/searchAddress.do'
 
-  attr_accessor :search_results, :city, :fuel
+  attr_accessor :search_results, :fuel, :requests
 
-  def initialize(city, fuel)
-    @city = city
+  def initialize(fuel)
     @fuel = fuel
   end
 
@@ -14,30 +28,51 @@ class Mityc::Geoportal::SearchMeasuresByFuel
 
 protected
   def retrieve_measures
-    measures = []
     hydra    = Typhoeus::Hydra.new(max_concurrency: 20)
+    fire_starter = self.request
+    fire_starter.on_complete { |response|
+      self.search_results = Mityc::Geoportal::SearchResults.parse(response.body).first
 
-    request.on_complete { |response|
-      self.search_results  = Mytic::Geoportal::SearchResuls.parse(response.body)
-      self.search_results.pages.each.with_index { |_, page|
-        r = request(page+1) { |response|
-          measures += Mytic::Geoportal::Measure.parse(response.body)
+      self.search_results.offsets.each { |offset|
+        req = request(offset)
+        req.on_complete { |response|
+          Mityc::Geoportal::Measure.parse(response.body.encode('UTF-8', 'ISO-8859-15'))
         }
-        hydra.queue(r)
+        hydra.queue(req)
       }
-      measures += Mytic::Geoportal::Measure.parse(response.body)
-    }
 
+      Mityc::Geoportal::Measure.parse(response.body.encode('UTF-8', 'ISO-8859-15'))
+    }
+    hydra.queue fire_starter
     hydra.run
-    measures
+
+    self.requests.map(&:handled_response).flatten
+
   end
 
   def request(offset=0)
-    self.offset = offset
-    Typhoeus::Request.new(SEARCH_ENDPOINT_URL, params: query_params)
+    self.requests ||= []
+    req = Typhoeus::Request.new(SEARCH_ENDPOINT_URL, params: query_params(offset))
+    self.requests << req
+    req
   end
 
-  def query_params
-
+  #   nomProvincia=01&
+  #   nomMunicipio=ALTUBE&
+  #   tipoCarburante=1&
+  #   rotulo=&
+  #   tipoVenta=false&
+  #   nombreVia=&
+  #   numVia=&
+  #   codPostal=&
+  #   economicas=false&
+  #   tipoBusqueda=0&
+  #   ordenacion=P&
+  #   posicion=0
+  def query_params(offset=0)
+    { nomProvincia: '',  nomMunicipio: '', tipoCarburante: self.fuel.id, codPostal: '',
+      rotulo: '',        tipoVenta: false, nombreVia: '',   numVia: '',
+      economicas: false, tipoBusqueda: 0,  ordenacion: 'P', position: offset
+    }
   end
 end
